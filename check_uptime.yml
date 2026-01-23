@@ -1,0 +1,8 @@
+---
+
+- name: Run a playbook
+  hosts: all
+  tasks:
+
+    - name: Example playbook using the command module
+      ansible.builtin.command: uptime

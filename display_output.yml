@@ -1,0 +1,18 @@
+---
+
+- name: Run a playbook and display the output
+  hosts: all
+  tasks:
+
+    - name: Run a command uptime
+      ansible.builtin.shell: uptime -s
+      register: shell_result
+
+    - name: Store the standard output into a variable shell_result
+      ansible.builtin.debug:
+        var: shell_result.stdout_lines
+
+    - name: Print custom message with output
+      ansible.builtin.debug:
+        msg: "The custom output was: {{ shell_result.stdout }}"
+

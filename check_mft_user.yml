@@ -1,0 +1,21 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+    - name: Check if 'mft_agent' exists
+      ansible.builtin.getent:
+        database: passwd
+        key: mft_agent
+      register: user_check_result
+      ignore_errors: true
+
+    - name: Debug user existence (optional)
+      ansible.builtin.debug:
+        msg: "User 'mft_agent' exists: {{ not user_check_result.failed }}"
+
+    - name: Run a task only if the user does not exist
+      ansible.builtin.debug:
+        msg: "User 'mft_agent' not found, performing creation or other actions."
+      when: user_check_result.failed
